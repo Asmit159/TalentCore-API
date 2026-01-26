@@ -96,6 +96,8 @@ mvn spring-boot:run
 ```
 The API will be available at http://localhost:8080/api/employees.
 
+---
+
 ###  Future Roadmap
 This project is designed to be a living base for a complete Employee Management System. Upcoming planned features:
 
@@ -106,6 +108,8 @@ This project is designed to be a living base for a complete Employee Management 
 [ ] Docs: Swagger/OpenAPI integration.
 
 [ ] Containerization: Docker support for easy deployment.
+
+---
 
 ### 👤 Author
 Asmit Mandal -  Aspiring Software Engineer & Spring Boot Enthusiast

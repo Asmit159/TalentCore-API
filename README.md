@@ -1,4 +1,4 @@
-# 🏢 TalentCore-API  -  an Employee REST Service (Spring Boot)
+# 🏢 TalentCore-API      -    an Employee REST Service (Spring Boot)
 
 [![Java](https://img.shields.io/badge/Java-17%2B-orange?style=flat&logo=java)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4-green?style=flat&logo=spring)](https://spring.io/projects/spring-boot)

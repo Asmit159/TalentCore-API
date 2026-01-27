@@ -9,24 +9,15 @@
 **TalentCore API** is a thoughtfully designed Spring Boot REST service for managing employee data.  
 The project emphasizes **clean architecture**, **strict separation of concerns**, and **robust error handling**, serving as a strong foundation for scalable backend systems.
 
-Rather than focusing only on CRUD functionality, this codebase demonstrates *how backend services should be structured* to remain maintainable and extensible as complexity grows.
+Rather than focusing only on CRUD functionality, this codebase demonstrates *how backend services are structured* to remain maintainable and extensible as complexity grows.
 
 ---
 
-##  Project Intent
-
-Many REST API examples prioritize functionality over design.  
-This project was built with a different objective:
-
-> **To model how a real-world backend service should be structured from day one.**
-
-Key design principles:
+## Key design principles:
 - Controllers remain thin and HTTP-focused
 - Business rules are centralized in the service layer
 - Persistence logic is isolated behind a DAO abstraction
 - All error scenarios are handled consistently and predictably
-
-This approach mirrors patterns commonly used in professional backend teams.
 
 ---
 
@@ -149,17 +140,17 @@ http://localhost:8080/api/employees
 This project is intentionally designed as an extensible foundation.
 Planned enhancements include:
 
-User authentication with BCrypt and Spring Security
+- User authentication with BCrypt and Spring Security
 
-DTO-based API contracts
+- DTO-based API contracts
 
-Pagination and sorting
+- Pagination and sorting
 
-Validation and constraint handling
+- Validation and constraint handling
 
-Unit and integration testing
+- Unit and integration testing
 
-Containerized deployment using Docker
+- Containerized deployment using Docker
 
 ###  Author
 

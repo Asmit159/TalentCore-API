@@ -1,129 +1,172 @@
-# 🏢 TalentCore-API      -    an Employee REST Service (Spring Boot)
+# TalentCore API  
+### Employee Management REST Service — Spring Boot
 
-[![Java](https://img.shields.io/badge/Java-17%2B-orange?style=flat&logo=java)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4-green?style=flat&logo=spring)](https://spring.io/projects/spring-boot)
-[![MySQL](https://img.shields.io/badge/Database-MySQL-blue?style=flat&logo=mysql)](https://www.mysql.com/)
+[![Java](https://img.shields.io/badge/Java-25-orange?style=flat&logo=java)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.x-brightgreen?style=flat&logo=spring)](https://spring.io/projects/spring-boot)
+[![Database](https://img.shields.io/badge/Database-MySQL-blue?style=flat&logo=mysql)](https://www.mysql.com/)
 [![Build](https://img.shields.io/badge/Build-Maven-C71A36?style=flat&logo=apachemaven)](https://maven.apache.org/)
 
-A production-grade **REST API** designed to manage employee records with clean architecture and scalable design patterns. 
+**TalentCore API** is a thoughtfully designed Spring Boot REST service for managing employee data.  
+The project emphasizes **clean architecture**, **strict separation of concerns**, and **robust error handling**, serving as a strong foundation for scalable backend systems.
 
-While this project started as part of the **REST API module**, I have significantly extended it to bridge the gap between "tutorial code" and **real-world backend engineering**. It focuses on separation of concerns, data integrity, and API usability.
-
----
-
-## The "Why" Behind This Project
-
-Many CRUD projects stop at "it works." My goal here was to build a backend foundation that mimics a professional environment. Instead of cluttering controllers with logic, this project emphasizes:
-
-* **Clean Architecture:** Strict separation between Controller, Service, and Repository layers.
-* **Resilience:** Global exception handling to ensure the API never breaks silently or returns stack traces to the client.
-* **Scalability:** Implementation of Pagination and Sorting to handle large datasets effectively.
-* **Usability:** Search endpoints that mimic real-world requirements (e.g., admin dashboards).
+Rather than focusing only on CRUD functionality, this codebase demonstrates *how backend services should be structured* to remain maintainable and extensible as complexity grows.
 
 ---
 
-## Key Features
+##  Project Intent
 
-### Core Architecture
-* **Layered Design:** `Controller` → `Service` (Business Logic) → `Repository` (Data Access).
-* **DTO Pattern:** Internal entities are decoupled from the API layer to prevent over-posting and accidental data exposure.
-* **Dependency Injection:** Fully leveraging Spring's IoC container.
+Many REST API examples prioritize functionality over design.  
+This project was built with a different objective:
+
+> **To model how a real-world backend service should be structured from day one.**
+
+Key design principles:
+- Controllers remain thin and HTTP-focused
+- Business rules are centralized in the service layer
+- Persistence logic is isolated behind a DAO abstraction
+- All error scenarios are handled consistently and predictably
+
+This approach mirrors patterns commonly used in professional backend teams.
+
+---
+
+##  Architectural Overview
+
+The application follows a **layered architecture** aligned with industry best practices:
+
+```bash
+Controller → Service → DAO → Database
+```
+
+---
+
+### Responsibility Breakdown
+
+- **Controller Layer**  
+  Handles request mapping, routing, and HTTP semantics only.
+
+- **Service Layer**  
+  Enforces business rules, validates application state, and defines transactional boundaries.
+
+- **DAO (Data Access Object) Layer**  
+  Encapsulates persistence logic using JPA and `EntityManager`, shielding higher layers from database concerns.
+
+- **Global Exception Handling**  
+  Centralized error handling via `@ControllerAdvice`, ensuring consistent and structured JSON error responses.
+
+This separation ensures clarity, testability, and long-term maintainability.
+
+---
+
+##  Core Features
 
 ### API Capabilities
-* **Advanced CRUD:** Complete lifecycle management for employee records.
-* **Smart Pagination & Sorting:** efficiently loads data chunks (e.g., `?page=0&size=10&sort=lastName`).
-* **Dynamic Search:** Filter employees by email, name, or department without fetching the entire database.
-* **Input Validation:** Hibernate Validator prevents bad data (e.g., invalid emails) from ever reaching the database.
-* **Global Error Handling:** A centralized `@ControllerAdvice` ensures all errors return a consistent, structured JSON response.
+- Complete **CRUD lifecycle** for Employee resources
+- Support for **partial updates** using HTTP `PATCH`
+- Clean handling of edge cases and invalid requests
+
+### Error Handling
+- Centralized global exception management
+- Clear and meaningful HTTP status codes:
+  - `404` — Resource not found
+  - `400` — Invalid request or input
+  - `405` — Unsupported HTTP method
+  - `500` — Unexpected server error
+- No stack traces or internal details exposed to clients
+
+### API Documentation
+- Integrated **OpenAPI / Swagger** support
+- Custom endpoints for Swagger UI and API specifications
 
 ---
 
-## Tech Stack
+##  Technology Stack
 
-* **Language:** Java 25
-* **Framework:** Spring Boot 3 (Web, Data JPA)
-* **Database:** MySQL
-* **Build Tool:** Maven
-* **Testing/Debug:** Postman
+- **Language:** Java 25
+- **Framework:** Spring Boot 4.x
+- **Persistence:** JPA (Hibernate) with `EntityManager`
+- **Database:** MySQL
+- **Build Tool:** Maven
+- **API Testing & Exploration:** Swagger UI / Postman
 
 ---
 
-## API Reference
+##  API Reference
 
-### Employee Management
+### Employee Endpoints
 
 | Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/employees` | Fetch all employees (supports pagination) |
-| `GET` | `/api/employees/{id}` | Get specific employee details |
+|------|---------|-------------|
+| `GET` | `/api/employees` | Retrieve all employees |
+| `GET` | `/api/employees/{id}` | Retrieve a specific employee |
 | `POST` | `/api/employees` | Create a new employee |
-| `PUT` | `/api/employees/{id}` | Update an existing employee |
-| `DELETE` | `/api/employees/{id}` | Remove an employee |
-
-### Search & Filtering
-* **Search by Email:** `GET /api/employees/search?email=example@gmail.com`
-* **Sorted List:** `GET /api/employees?page=0&size=5&sort=firstName,asc`
+| `PUT` | `/api/employees` | Update an existing employee |
+| `PATCH` | `/api/employees/{id}` | Partially update employee fields |
+| `DELETE` | `/api/employees/{id}` | Delete an employee |
 
 ---
 
-## API Documentation (OpenAPI / Swagger)
+##  API Documentation (OpenAPI / Swagger)
 
 Swagger UI will be available at:
 http://localhost:8080/mu-ui.html
 
-OpenAPI specification:
-- JSON: /my-api-docs
-- YAML: /my-api-docs.yaml
+
+OpenAPI specification endpoints:
+- JSON: `/my-api-docs`
+- YAML: `/my-api-docs.yaml`
 
 ---
 
-## Getting Started
+##  Getting Started
 
-### 1. Prerequisites
-Ensure you have **Java**, **Maven**, and **MySQL** installed.
+### Prerequisites
+- Java 25
+- Maven
+- MySQL
 
-### 2. Database Setup
-Create the database in your MySQL client:
+### Database Setup
 ```sql
 CREATE DATABASE employee_directory;
-```
-### 3. Configuration
-```
-Update src/main/resources/application.properties with your credentials:
+Configuration
 
-Properties
+Update src/main/resources/application.properties with your database credentials:
+
 spring.datasource.url=jdbc:mysql://localhost:3306/employee_directory
-spring.datasource.username=root
+spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
-```
-# Hibernate Settings
-```
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
-### 4. Run the Application
-```Shell
+
+Running the Application
 mvn spring-boot:run
 ```
-The API will be available at http://localhost:8080/api/employees.
 
----
+## Base API URL:
 
-###  Future Roadmap
-This project is designed to be a living base for a complete Employee Management System. Upcoming planned features:
+http://localhost:8080/api/employees
 
-[ ] Security: JWT Authentication & Role-Based Access Control (Admin vs User).
+###  Roadmap
 
-[ ] Testing: Unit tests with JUnit 5 and Mockito.
+This project is intentionally designed as an extensible foundation.
+Planned enhancements include:
 
-[ ] Docs: Swagger/OpenAPI integration.
+User authentication with BCrypt and Spring Security
 
-[ ] Containerization: Docker support for easy deployment.
+DTO-based API contracts
 
----
+Pagination and sorting
 
-### 👤 Author
-Asmit Mandal -  Aspiring Software Engineer & Spring Boot Enthusiast
+Validation and constraint handling
 
-If you have any feedback or suggestions, feel free to reach out or open an issue!
-And Don't forget to ⭐ the repo.
+Unit and integration testing
+
+Containerized deployment using Docker
+
+###  Author
+
+Asmit Mandal
+Aspiring Backend Engineer | Spring Boot Enthusiast
+
+Feedback, suggestions, and discussions are welcome via issues or pull requests.
+
+⭐ If this repository helps clarify backend architecture concepts, consider starring it.
+

@@ -66,6 +66,17 @@ Many CRUD projects stop at "it works." My goal here was to build a backend found
 
 ---
 
+## API Documentation (OpenAPI / Swagger)
+
+Swagger UI is available at:
+http://localhost:8080/mu-ui.html
+
+OpenAPI specification:
+- JSON: /my-api-docs
+- YAML: /my-api-docs.yaml
+
+---
+
 ## Getting Started
 
 ### 1. Prerequisites

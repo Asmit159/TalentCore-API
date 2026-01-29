@@ -298,6 +298,13 @@ Employee creation using REST API.
 
 ![Create Employee](docs/screenshots/create_employee.png)
 
+### End-to-End API Demonstration (Video)
+
+A short walkthrough demonstrating authentication, security enforcement, and core CRUD operations:
+
+[Watch the API demo video](docs/videos/talentcore-api-demo.mp4)
+
+
 ---
 
 ## Future Enhancements

@@ -30,7 +30,43 @@ The primary objectives of this project were to:
 
 The application follows a **layered architecture**:
 
-Controller → Service → Repository → Database
+```mermaid
+flowchart TD
+
+%% Client Layer
+A[Client / API Consumer] -->|HTTP Requests| B[EmployeeRestController]
+A -->|Auth Requests| C[AuthController]
+
+%% Controller Layer
+B --> D[EmployeeService]
+C --> E[UserService]
+
+%% Service Layer
+D --> F[EmployeeRepository]
+E --> G[UserRepository]
+
+%% Repository Layer
+F --> H[(Employee Database Table)]
+G --> I[(Users Database Table)]
+
+%% DTO Mapping
+D --> J[EmployeeMapper]
+J --> K[EmployeeDTO]
+
+%% Security Flow
+A -->|Basic Auth Credentials| L[Spring Security Filter]
+L --> M[CustomUserDetailsService]
+M --> G
+
+%% Exception Handling
+B -.-> N[Global Exception Handler]
+D -.-> N
+
+%% Documentation
+B -.-> O[Swagger / OpenAPI Documentation]
+
+
+```
 
 
 Key architectural decisions:

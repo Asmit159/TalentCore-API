@@ -1,163 +1,291 @@
 # TalentCore API  
-### Employee Management REST Service — Spring Boot
-
-[![Java](https://img.shields.io/badge/Java-25-orange?style=flat&logo=java)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.x-brightgreen?style=flat&logo=spring)](https://spring.io/projects/spring-boot)
-[![Database](https://img.shields.io/badge/Database-MySQL-blue?style=flat&logo=mysql)](https://www.mysql.com/)
-[![Build](https://img.shields.io/badge/Build-Maven-C71A36?style=flat&logo=apachemaven)](https://maven.apache.org/)
-
-**TalentCore API** is a thoughtfully designed Spring Boot REST service for managing employee data.  
-The project emphasizes **clean architecture**, **strict separation of concerns**, and **robust error handling**, serving as a strong foundation for scalable backend systems.
-
-Rather than focusing only on CRUD functionality, this codebase demonstrates *how backend services are structured* to remain maintainable and extensible as complexity grows.
+A Secure, Scalable Employee Management REST API built with Spring Boot
 
 ---
 
-## Key design principles:
-- Controllers remain thin and HTTP-focused
-- Business rules are centralized in the service layer
-- Persistence logic is isolated behind a DAO abstraction
-- All error scenarios are handled consistently and predictably
+## Overview
+
+**TalentCore API** is a production-ready backend service designed to manage employee data with a strong emphasis on clean architecture, security, and real-world API design principles.
+
+While the project originated as part of a Spring Boot REST learning module, it has been deliberately extended beyond tutorial scope to reflect **industry-grade backend development practices**. The result is a robust, well-structured REST API that demonstrates how enterprise Java applications are typically built, secured, validated, and documented.
+
+This repository focuses on **clarity, correctness, and extensibility** rather than shortcuts or framework magic.
 
 ---
 
-##  Architectural Overview
+## Project Goals
 
-The application follows a **layered architecture** aligned with industry best practices:
+The primary objectives of this project were to:
 
-```bash
-Controller → Service → DAO → Database
-```
-
----
-
-### Responsibility Breakdown
-
-- **Controller Layer**  
-  Handles request mapping, routing, and HTTP semantics only.
-
-- **Service Layer**  
-  Enforces business rules, validates application state, and defines transactional boundaries.
-
-- **DAO (Data Access Object) Layer**  
-  Encapsulates persistence logic using JPA and `EntityManager`, shielding higher layers from database concerns.
-
-- **Global Exception Handling**  
-  Centralized error handling via `@ControllerAdvice`, ensuring consistent and structured JSON error responses.
-
-This separation ensures clarity, testability, and long-term maintainability.
+- Design a clean, layered backend architecture
+- Implement a complete RESTful API with proper HTTP semantics
+- Enforce data integrity and validation at multiple layers
+- Secure endpoints using Spring Security and BCrypt
+- Expose APIs with clear, interactive documentation
+- Build something maintainable, not just functional
 
 ---
 
-##  Core Features
+## Architecture
 
-### API Capabilities
-- Complete **CRUD lifecycle** for Employee resources
-- Support for **partial updates** using HTTP `PATCH`
-- Clean handling of edge cases and invalid requests
+The application follows a **layered architecture**:
 
-### Error Handling
-- Centralized global exception management
-- Clear and meaningful HTTP status codes:
-  - `404` — Resource not found
-  - `400` — Invalid request or input
-  - `405` — Unsupported HTTP method
-  - `500` — Unexpected server error
-- No stack traces or internal details exposed to clients
+Controller → Service → Repository → Database
+
+
+Key architectural decisions:
+
+- **Controllers** handle request/response mapping only
+- **Services** contain all business logic and validations
+- **Repositories** abstract persistence using Spring Data JPA
+- **DTOs** decouple internal entities from external API contracts
+- **Global exception handling** ensures consistent error responses
+- **Security layer** is isolated from business logic
+
+---
+
+## Core Features
+
+### Employee Management
+- Full CRUD operations for employees
+- Partial updates using HTTP PATCH
+- Pagination and sorting support for large datasets
+- Unique email enforcement at database level
+- DTO-based API responses to prevent over-exposure
+
+### Validation & Error Handling
+- Field-level validation using Jakarta Validation
+- Centralized exception handling with structured JSON responses
+- Proper HTTP status codes for all failure scenarios
+- Graceful handling of invalid input and edge cases
+
+### Security
+- Spring Security integration
+- BCrypt password hashing
+- User registration endpoint
+- Role-based user model
+- Protected employee endpoints via authentication
 
 ### API Documentation
-- Integrated **OpenAPI / Swagger** support
-- Custom endpoints for Swagger UI and API specifications
+- OpenAPI / Swagger integration
+- Interactive API exploration via Swagger UI
+- Auto-generated request/response schemas
+- Downloadable OpenAPI specification
 
 ---
 
-##  Technology Stack
+## Technology Stack
 
-- **Language:** Java 25
-- **Framework:** Spring Boot 4.x
-- **Persistence:** JPA (Hibernate) with `EntityManager`
-- **Database:** MySQL
-- **Build Tool:** Maven
-- **API Testing & Exploration:** Swagger UI / Postman
-
----
-
-##  API Reference
-
-### Employee Endpoints
-
-| Method | Endpoint | Description |
-|------|---------|-------------|
-| `GET` | `/api/employees` | Retrieve all employees |
-| `GET` | `/api/employees/{id}` | Retrieve a specific employee |
-| `POST` | `/api/employees` | Create a new employee |
-| `PUT` | `/api/employees` | Update an existing employee |
-| `PATCH` | `/api/employees/{id}` | Partially update employee fields |
-| `DELETE` | `/api/employees/{id}` | Delete an employee |
+- **Language:** Java 25  
+- **Framework:** Spring Boot 4  
+- **Persistence:** Spring Data JPA  
+- **Database:** MySQL  
+- **Security:** Spring Security, BCrypt  
+- **Build Tool:** Maven  
+- **API Documentation:** Springdoc OpenAPI / Swagger  
+- **Testing & Debugging:** Postman, Swagger UI  
 
 ---
-
-##  API Documentation (OpenAPI / Swagger)
-
-Swagger UI will be available at:
-http://localhost:8080/mu-ui.html
-
-
-OpenAPI specification endpoints:
-- JSON: `/my-api-docs`
-- YAML: `/my-api-docs.yaml`
-
----
-
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
-- Java 25
-- Maven
-- MySQL
+* **JDK 25** or higher
+* **Maven 3.8+**
+* **MySQL 8.0+** running on port `3306` (or configured otherwise)
 
-### Database Setup
-```sql
-CREATE DATABASE employee_directory;
-Configuration
+### Installation
 
-Update src/main/resources/application.properties with your database credentials:
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/Asmit159/TalentCore-API.git](https://github.com/Asmit159/TalentCore-API.git)
+    cd TalentCore-API
+    ```
 
-spring.datasource.url=jdbc:mysql://localhost:3306/employee_directory
-spring.datasource.username=YOUR_USERNAME
-spring.datasource.password=YOUR_PASSWORD
+2.  **Configure the Database**
+    Update `src/main/resources/application.properties` with your MySQL credentials:
+    ```properties
+    spring.datasource.url=jdbc:mysql://localhost:3306/talentcore_db
+    spring.datasource.username=root
+    spring.datasource.password=your_password
+    ```
 
-Running the Application
-mvn spring-boot:run
-```
+3.  **Build the Project**
+    ```bash
+    mvn clean install
+    ```
 
-## Base API URL:
+4.  **Run the Application**
+    ```bash
+    mvn spring-boot:run
+    ```
 
-http://localhost:8080/api/employees
+    The API will be available at [http://localhost:8080](http://localhost:8080).
 
-###  Roadmap
+    ---
+    
+## API Endpoints
 
-This project is intentionally designed as an extensible foundation.
-Planned enhancements include:
+### Employee API
 
-- User authentication with BCrypt and Spring Security
+| Method | Endpoint | Description |
+|------|--------|-------------|
+| GET | `/api/employees` | Retrieve all employees |
+| GET | `/api/employees/{id}` | Retrieve employee by ID |
+| POST | `/api/employees` | Create a new employee |
+| PUT | `/api/employees/{id}` | Update an existing employee |
+| PATCH | `/api/employees/{id}` | Partially update an employee |
+| DELETE | `/api/employees/{id}` | Delete an employee |
+| GET | `/api/employees/paged` | Paginated & sorted listing |
 
-- DTO-based API contracts
+### Authentication API
 
-- Pagination and sorting
+| Method | Endpoint | Description |
+|------|--------|-------------|
+| POST | `/api/auth/register` | Register a new user |
 
-- Validation and constraint handling
+---
 
-- Unit and integration testing
+## API Documentation
 
-- Containerized deployment using Docker
+Swagger UI is available at:
 
-###  Author
+http://localhost:8080/swagger-ui/index.html
 
-Asmit Mandal
-Aspiring Backend Engineer | Spring Boot Enthusiast
 
-Feedback, suggestions, and discussions are welcome via issues or pull requests.
+Custom OpenAPI paths:
 
-⭐ If this repository helps clarify backend architecture concepts, consider starring it.
+/mu-ui.html
+/my-api-docs
 
+
+All endpoints, schemas, and request formats are documented and testable directly from the UI.
+
+---
+
+## Database Design
+
+### Employee Table
+- Auto-generated primary key
+- Unique constraint on email
+- Managed via JPA/Hibernate
+
+### Users Table
+- BCrypt-hashed passwords
+- Role-based authorization
+- Automatically generated by Hibernate
+
+---
+
+## Validation & Data Integrity
+
+- Input validation enforced at DTO level
+- Email format validation
+- Mandatory field checks
+- Database-level constraints for uniqueness
+- PATCH requests validated manually to ensure integrity
+
+---
+
+## Security Notes
+
+- Passwords are never stored in plain text
+- BCrypt hashing is applied before persistence
+- Authentication is required for protected endpoints
+- Security configuration is modular and extensible
+
+---
+
+## Repository Structure
+
+src/main/java/com/luv2code/springboot/cruddemo
+  │
+- ├── controller
+- ├── service
+- ├── repository
+- ├── entity
+- ├── dto
+- ├── exception
+- ├── security
+- └── config
+
+
+Each package has a single responsibility and minimal coupling.
+
+---
+
+## API Demonstration & Proof of Functionality
+
+The repository includes:
+- Swagger screenshots
+- Postman request/response samples
+- Validation error demonstrations
+- BCrypt-hashed password evidence
+- Database snapshots
+
+### API Documentation (Swagger)
+
+The API is fully documented using OpenAPI and exposed via Swagger UI for interactive exploration.
+
+![Swagger UI – Employee Endpoints](docs/screenshots/swagger1.png)
+![Swagger UI – Authentication Endpoints](docs/screenshots/swagger2.png)
+![OpenAPI Specification](docs/screenshots/swagger3.png)
+
+### Authentication & Security
+
+User authentication is implemented using Spring Security with BCrypt password hashing.
+
+**User registration**
+![User Registration](docs/screenshots/userregistration.png)
+
+**BCrypt-hashed passwords stored in database**
+![BCrypt Hash in Database](docs/screenshots/hashedpassword.png)
+
+**Authorized request (200 OK)**
+![Authorized Request](docs/screenshots/authorized.png)
+
+**Unauthorized request (401 Unauthorized)**
+![Unauthorized Request](docs/screenshots/401notauthorized.png)
+
+### Validation & Error Handling
+
+The API enforces strict validation rules and returns consistent, structured error responses.
+
+**Validation error example**
+![Validation Error Response](docs/screenshots/validation%20errors.png)
+
+**Delete employee operation**
+![Delete Employee](docs/screenshots/deleteemployee.png)
+
+### Core CRUD Operations
+
+Employee creation using REST API.
+
+![Create Employee](docs/screenshots/create_employee.png)
+
+---
+
+## Future Enhancements
+
+While feature-complete for its scope, the project can be extended with:
+
+- JWT-based authentication
+- Role-based endpoint authorization
+- Refresh tokens
+- Rate limiting
+- Integration tests with Testcontainers
+- Frontend integration (React / Angular)
+
+---
+
+## Author
+
+**Asmit Mandal**  
+Backend Developer | Java & Spring Boot
+
+Feedback, suggestions, and discussions are always welcome.
+⭐ this repo, if you like it
+---
+
+## License
+
+This project is licensed under the **AGPL-3.0 License**.
